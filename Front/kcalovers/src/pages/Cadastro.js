@@ -21,7 +21,7 @@ function Cadastro(){
 
     
 
-    function cadastrar(e){
+    async function cadastrar(e){
         setAlerta("");
         e.preventDefault()
         if(nome === "" || email === "" || senha === "" || confSenha === ""){
@@ -38,17 +38,28 @@ function Cadastro(){
                 email: email,
                 senha: senha
             }
-            fetch("http://localhost:8080/users", {
-                method: "POST",
-                headers:{
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(user),
-            }).then((resp) => resp.json())
-            .then((data)=>{
+            try{
+                const response = await fetch("http://localhost:8080/users", {
+                    method: "POST",
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify(user),
+                })
+                
+                if(!response.ok){
+                    setAlerta("Erro ao registrar!");
+                }
+
+                const data = await response.json();
+                navigate("/login");
                 console.log(data);
-                navigate('/login')
-            }).catch((err)=> (console.log(err)))
+                
+            } catch(err){
+                console.log(err);
+                setAlerta("Erro ao conectar ao servidor!")
+            }
+
         }
     }
 

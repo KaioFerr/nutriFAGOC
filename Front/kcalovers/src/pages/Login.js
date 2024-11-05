@@ -11,25 +11,33 @@ function Login(){
     const [senha, setSenha] = useState("");
     const [alert, setAlert] = useState("");
 
-    function login(){
+    async function login(){
         const user ={
             email: email,
             senha: senha
         }
+        try{
+            const response = await fetch("http://localhost:8080/login",{
+                method: "POST",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
 
-        fetch("http://localhost:8080/login",{
-            method: "POST",
-            headers:{
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(user)
-        }).then((resp)=> resp.json())
-        .then((data) => {
-            navigate("/")
-        }).catch((err)=>{
-            console.log(err);
-            setAlert("Email e/ou senha inválidos!")
-        })
+            if(!response.ok){
+                setAlert("Email e/ou senha inválidos!")
+                return           
+            }
+
+            const data = await response.json();
+            console.log(data);
+            navigate("/") 
+
+        }catch(err){
+            console.log("Erro ao realizar login:", err);
+            setAlert("Erro ao conectar ao servidor");
+        }
     }
 
     return(
