@@ -13,3 +13,11 @@ header h1 {
     color: white;
     align-items: center;
 }
+
+.logout{
+    position: absolute;
+    right: 0;
+    width: 75px;
+    font-size: 18px;
+    height: 30px;
+}

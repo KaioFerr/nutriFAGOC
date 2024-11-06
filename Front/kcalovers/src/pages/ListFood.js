@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from "./ListFood.module.css"
 
@@ -8,8 +9,12 @@ import Header from '../layout/Header';
 
 function ListFood(){
 
+    const navigate = useNavigate()
+
     const [foods, setFoods] = useState([]);
     const [termoBusca, setTermoBusca] = useState("")
+
+    
   
     useEffect(()=>{
       fetch("http://localhost:8080/foods",{
@@ -29,9 +34,19 @@ function ListFood(){
       food.descricaoalimento.toLowerCase().includes(termoBusca.toLowerCase())
     );
 
+    if (localStorage.getItem("user") === "") {
+      navigate("/login"); 
+      return null;
+    }
+
+    function logout(){
+      navigate("/login")
+      localStorage.setItem("user", "");
+    }
+
     return(
         <div className={styles.container}>
-                  <Header/>
+            <Header handleSubmit={logout}/>
             <InputBusca onSearch={setTermoBusca}/>
             <div className={styles.list}>
               {foods.length > 0 && alimentoFiltro.map(food=> (

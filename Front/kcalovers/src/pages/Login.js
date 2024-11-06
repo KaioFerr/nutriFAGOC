@@ -32,7 +32,8 @@ function Login(){
 
             const data = await response.json();
             console.log(data);
-            navigate("/") 
+            navigate("/");
+            localStorage.setItem("user", data)
 
         }catch(err){
             console.log("Erro ao realizar login:", err);

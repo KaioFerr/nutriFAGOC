@@ -14,11 +14,15 @@ function Cadastro(){
     const [alerta, setAlerta] = useState("");
 
     function validarEmail(email) {
-        // Expressão regular para validar e-mail
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
       };
 
+    function validarSenha(senha) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z]).{9,}$/;
+        return regex.test(senha);
+    }
+    
     
 
     async function cadastrar(e){
@@ -32,6 +36,8 @@ function Cadastro(){
             setAlerta("Insira um email válido!")
         }else if(senha !== confSenha){
             setAlerta("As senhas são diferentes!")
+        }else if(!validarSenha(senha)){
+            setAlerta("A senha deve conter pelo menos: 8 digitos, uma letra minúscula e uma maiuscula!")
         }else {
             const user ={
                 nome: nome,
