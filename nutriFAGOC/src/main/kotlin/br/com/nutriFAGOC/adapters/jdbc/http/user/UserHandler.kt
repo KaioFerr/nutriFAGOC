@@ -1,6 +1,7 @@
 package br.com.nutriFAGOC.adapters.jdbc.http.user
 
 
+import br.com.nutriFAGOC.adapters.jdbc.jdbc.user.UserJDBCRepository
 import br.com.nutriFAGOC.application.Food.usuario.UserService
 import br.com.nutriFAGOC.application.Food.usuario.UserUpdateCommand
 import br.com.nutriFAGOC.application.Food.usuario.UserCreateCommand
@@ -12,7 +13,8 @@ import java.util.*
 
 @Component
 class UserHandler(
-    private val userService: UserService
+    private val userService: UserService,
+    private val userJDBCRepository: UserJDBCRepository,
 ) {
 
     fun findAll(): ResponseEntity<List<User>> {
@@ -26,6 +28,10 @@ class UserHandler(
     }
 
     fun insert(userCreateCommand: UserCreateCommand): ResponseEntity<User> {
+        val userExist = userJDBCRepository.findByEmail(userCreateCommand.email)
+        if(userExist != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userExist)
+        }
         val user = userService.insert(userCreateCommand)
         return ResponseEntity.status(HttpStatus.CREATED).body(user)
     }

@@ -1,5 +1,6 @@
 package br.com.nutriFAGOC.adapters.jdbc.http.user
 
+import br.com.nutriFAGOC.adapters.jdbc.jdbc.user.UserJDBCRepository
 import br.com.nutriFAGOC.domain.food.Foods.usuario.User
 import br.com.nutriFAGOC.application.Food.usuario.UserUpdateCommand
 import br.com.nutriFAGOC.application.Food.usuario.UserCreateCommand

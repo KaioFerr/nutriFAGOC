@@ -52,12 +52,18 @@ function Cadastro(){
                     },
                     body: JSON.stringify(user),
                 })
-                
-                if(!response.ok){
-                    setAlerta("Erro ao registrar!");
-                }
 
                 const data = await response.json();
+
+                if(response.status === 409){
+                    setAlerta("Email já cadastrado");
+                    return;
+                }else if(!response.ok){
+                    setAlerta("Erro ao cadastrar usuário");
+                    return;
+                }
+
+                
                 navigate("/login");
                 console.log(data);
                 
