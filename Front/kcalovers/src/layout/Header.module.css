@@ -21,7 +21,7 @@
 .headerContainer h1 {
     font-family: 'Handlee', sans-serif;
     color: white;
-    position: fixed;
+    position: absolute;
     top: 70px;
 }
 

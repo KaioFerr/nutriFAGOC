@@ -14,11 +14,21 @@ function ListFood(){
     const [foods, setFoods] = useState([]);
     const [termoBusca, setTermoBusca] = useState("")
 
+    
     useEffect(()=>{
+
+      const token = localStorage.getItem("token");
+      console.log(token);
+      if(!token){
+        navigate("/login", {state: {message: "Realize o login para acessar!",type:"error"}})
+        return;
+      }
+
       fetch("http://localhost:8080/foods",{
         method:"GET",
         headers:{
-          'Content-type' : "application/json"
+          'Content-type' : "application/json",
+          'Authorization' : `Bearer ${token}`
         },
       })
       .then((resp) => resp.json())
@@ -26,24 +36,15 @@ function ListFood(){
         setFoods(data)
       })
       .catch((err) => console.log(err))
-    }, [])
+    }, [navigate])
   
     const alimentoFiltro = foods.filter(food =>
       food.descricaoalimento.toLowerCase().includes(termoBusca.toLowerCase())
     );
 
-    const verifyLogin = localStorage.getItem("user") === ""
-
-    useEffect(() => {
-      if (verifyLogin) {
-          navigate('/login', {state:{message:"Realize login para acessar o conteúdo!", type:"error"}});
-      }
-    }, [navigate, verifyLogin]);
-   
-
     function logout(){
       navigate("/login")
-      localStorage.setItem("user", "");
+      localStorage.setItem("token", "");
     }
 
     return(

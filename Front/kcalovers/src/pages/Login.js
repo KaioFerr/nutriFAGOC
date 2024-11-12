@@ -44,8 +44,8 @@ function Login(){
 
             const data = await response.json();
             console.log(data);
+            localStorage.setItem("token", data.acessToken)
             navigate("/");
-            localStorage.setItem("user", data)
 
         }catch(err){
             console.log("Erro ao realizar login:", err);

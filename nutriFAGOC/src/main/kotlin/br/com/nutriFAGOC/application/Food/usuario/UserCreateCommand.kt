@@ -1,6 +1,7 @@
 package br.com.nutriFAGOC.application.Food.usuario
 
 import br.com.nutriFAGOC.domain.food.Foods.usuario.User
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
 
@@ -14,7 +15,7 @@ data class UserCreateCommand(
 
 @Serializable
 data class UserUpdateCommand(
-    val id: UUID?,
+    val id: @Contextual UUID?,
     val nome: String,
     val email: String,
     val senha: String,

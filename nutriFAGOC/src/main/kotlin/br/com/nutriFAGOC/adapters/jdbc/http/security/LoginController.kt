@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin(origins = arrayOf("*"))
 class LoginController(
     private val userService: UserService,
-    private val encoderPassword: EncoderPassword
+    private val encoderPassword: EncoderPassword,
+    private val jwtUtil: JWTUtil
 ) {
 
     @PostMapping("/login")
@@ -26,6 +27,8 @@ class LoginController(
             throw CredenciaisInvalidasException()
         }
 
-        return ResponseEntity.ok(Token("Qualquer coisa"))
+        val acessToken = jwtUtil.generateToken(usuario) ?: throw CredenciaisInvalidasException()
+
+        return ResponseEntity.ok(Token(acessToken))
     }
 }

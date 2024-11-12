@@ -1,6 +1,7 @@
 package br.com.nutriFAGOC.adapters.jdbc.http.error
 
 import br.com.nutriFAGOC.application.Food.food.exception.AlimentoNaoEncontradaException
+import mu.KotlinLogging
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.util.*
 
+private val LOGGER = KotlinLogging.logger{ }
+
 @ControllerAdvice
-class ErrorHandler {
+class ErrorHandler() {
 
     @ExceptionHandler(Exception::class)
     fun handlerException(ex: Exception): ResponseEntity<ErrorResponse> {
@@ -17,18 +20,17 @@ class ErrorHandler {
     }
 }
 
-// Logger
-private val LOGGER = LoggerFactory.getLogger(ErrorHandler::class.java)
-
 private fun Throwable.toResponse(): Pair<HttpStatus, ErrorResponse> =
     when (this) {
         is AlimentoNaoEncontradaException -> toResponse(
             id = this.foodId,
             statusCode = HttpStatus.NOT_FOUND
         )
-        else -> toResponse(
-            statusCode = HttpStatus.BAD_REQUEST
-        )
+        else ->  {
+            toResponse(
+                statusCode = HttpStatus.BAD_REQUEST
+            )
+        }
     }
 
 private fun Throwable.toResponse(

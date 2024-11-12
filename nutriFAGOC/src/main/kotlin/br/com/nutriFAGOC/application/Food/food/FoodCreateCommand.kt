@@ -1,6 +1,7 @@
 package br.com.nutriFAGOC.application.Food.food
 
 import br.com.nutriFAGOC.domain.food.Foods.food.Food
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
 
@@ -30,7 +31,7 @@ data class FoodCreateCommand(
 
 @Serializable
 data class FoodUpdateCommand(
-    val id: UUID?,
+    val id: @Contextual UUID?,
     val categoria: String,
     val numeroalimento: String,
     val descricaoalimento: String,
