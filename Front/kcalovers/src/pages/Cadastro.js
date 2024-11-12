@@ -64,7 +64,7 @@ function Cadastro(){
                 }
 
                 
-                navigate("/login");
+                navigate("/login", {state: {message: "Usuário criado com sucesso!",type:"success"}});
                 console.log(data);
                 
             } catch(err){

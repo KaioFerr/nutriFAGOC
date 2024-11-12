@@ -8,10 +8,21 @@
     background-color: #1DBF3B;
 }
 
-header h1 {
+.title{
+    width: 103px;
+    text-align: center;
+}
+
+.headerContainer img{
+    width: 60px;
+    height: 75px;
+}
+
+.headerContainer h1 {
     font-family: 'Handlee', sans-serif;
     color: white;
-    align-items: center;
+    position: fixed;
+    top: 70px;
 }
 
 .logout{

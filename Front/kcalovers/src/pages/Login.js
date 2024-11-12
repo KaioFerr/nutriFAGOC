@@ -1,15 +1,27 @@
-import {useState} from "react"
-import { useNavigate, Link} from "react-router-dom"
+import {useEffect, useState} from "react"
+import { useNavigate, Link, useLocation} from "react-router-dom"
 
 import styles from "./Login.module.css"
+import Message from "../layout/Message";
 
 function Login(){
 
     const navigate =  useNavigate();
+    const location = useLocation()
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [alert, setAlert] = useState("");
+    const [message, setMessage] = useState("");
+    const [type, setType] = useState("");
+
+    useEffect(()=>{
+        if(location.state && location.state.message && location.state.type){
+            setMessage(location.state.message);
+            setType(location.state.type)
+            navigate(location.pathname, { replace: true });
+        }
+    },[location , navigate])
 
     async function login(){
         const user ={
@@ -43,6 +55,7 @@ function Login(){
 
     return(
         <div className={styles.container}>
+            {message && <Message type={type} msg={message}/>}
             <div className={styles.login}>
                 <p className={styles.title}>LOGIN</p>
                 <div className={styles.inputs}>
@@ -53,7 +66,6 @@ function Login(){
                 </div>
                 <p className={styles.alert}>{alert}</p>
                 <button onClick={login}>Entrar</button>
-                <a href="EsqueciSenha.html">Esqueci minha senha</a>
             </div>
             <div className={styles.cadastro}>
                 <p>Não possui cadastro?</p>

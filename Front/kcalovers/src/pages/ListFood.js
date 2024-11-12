@@ -14,8 +14,6 @@ function ListFood(){
     const [foods, setFoods] = useState([]);
     const [termoBusca, setTermoBusca] = useState("")
 
-    
-  
     useEffect(()=>{
       fetch("http://localhost:8080/foods",{
         method:"GET",
@@ -34,10 +32,14 @@ function ListFood(){
       food.descricaoalimento.toLowerCase().includes(termoBusca.toLowerCase())
     );
 
-    if (localStorage.getItem("user") === "") {
-      navigate("/login"); 
-      return null;
-    }
+    const verifyLogin = localStorage.getItem("user") === ""
+
+    useEffect(() => {
+      if (verifyLogin) {
+          navigate('/login', {state:{message:"Realize login para acessar o conteúdo!", type:"error"}});
+      }
+    }, [navigate, verifyLogin]);
+   
 
     function logout(){
       navigate("/login")
