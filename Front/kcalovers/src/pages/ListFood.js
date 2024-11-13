@@ -14,32 +14,42 @@ function ListFood(){
     const [foods, setFoods] = useState([]);
     const [termoBusca, setTermoBusca] = useState("")
 
-    
     useEffect(()=>{
 
       const token = localStorage.getItem("token");
-      console.log(token);
+
       if(!token){
         navigate("/login", {state: {message: "Realize o login para acessar!",type:"error"}})
         return;
       }
 
-      fetch("http://localhost:8080/foods",{
-        method:"GET",
-        headers:{
-          'Content-type' : "application/json",
-          'Authorization' : `Bearer ${token}`
-        },
-      })
-      .then((resp) => resp.json())
-      .then((data)=>{
-        setFoods(data)
-      })
-      .catch((err) => console.log(err))
-    }, [navigate])
-  
+      async function getFood(){
+          try{
+            const response = await fetch("http://localhost:8080/foods",{
+            method:"GET",
+            headers:{
+              'Content-type' : "application/json",
+              'Authorization' : `Bearer ${token}`
+            },
+            })
+
+            if(!response.ok){
+              navigate("/login", {state:{message:"Realize o login para acessar!", type:"error"}})
+              return;
+            }
+
+            const data = await response.json()
+            setFoods(data);
+
+          }catch(err){
+            navigate("login", {state:{message:"Erro ao conectar ao servidor!",type:"error"}})
+          }
+      }
+        getFood();
+      }, [navigate])
+    
     const alimentoFiltro = foods.filter(food =>
-      food.descricaoalimento.toLowerCase().includes(termoBusca.toLowerCase())
+      food.descricaoalimento.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termoBusca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
     );
 
     function logout(){

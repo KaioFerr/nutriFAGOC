@@ -19,12 +19,10 @@ function Cadastro(){
       };
 
     function validarSenha(senha) {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z]).{9,}$/;
+        const regex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         return regex.test(senha);
     }
     
-    
-
     async function cadastrar(e){
         setAlerta("");
         e.preventDefault()

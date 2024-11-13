@@ -43,12 +43,10 @@ function Login(){
             }
 
             const data = await response.json();
-            console.log(data);
             localStorage.setItem("token", data.acessToken)
             navigate("/");
 
         }catch(err){
-            console.log("Erro ao realizar login:", err);
             setAlert("Erro ao conectar ao servidor");
         }
     }
