@@ -61,3 +61,9 @@ button{
     margin:15px;
     border-radius: 12px;
 }
+
+.back{
+    position: absolute;
+    left: 8px;
+    top: 8px;
+}

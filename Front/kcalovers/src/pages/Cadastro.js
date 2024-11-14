@@ -73,8 +73,13 @@ function Cadastro(){
         }
     }
 
+    const back = ()=>{
+        navigate("/login")
+    }
+
     return(
         <div className={styles.main}>
+            <button className={styles.back} onClick={back}>Voltar</button>
             <div className={styles.container}>
                 <h1>Realize seu cadastro:</h1>
                 <form>
