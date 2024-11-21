@@ -83,8 +83,8 @@ A aplicação fornece uma **API RESTful** para consulta das informações nutric
 ##### Acessando as Rotas da API
 
 1. **Link para o Postman**: 
-   Para visualizar e testar as rotas da API, você pode acessar a documentação no Postman através do link abaixo:
-   [Documentação da API no Postman](#)  *(https://solar-moon-739512.postman.co/workspace/McLovers~afc03bfc-20b6-45eb-81e5-6ab4563e366e/overview)*
+   Para visualizar e testar as rotas da API, você pode acessar a documentação no Postman através do link abaixo:  
+[Documentação da API no Postman](https://solar-moon-739512.postman.co/workspace/McLovers~afc03bfc-20b6-45eb-81e5-6ab4563e366e/overview)
 
 2. **Endpoints principais**:
    A seguir estão os principais endpoints que você pode testar no Postman:
